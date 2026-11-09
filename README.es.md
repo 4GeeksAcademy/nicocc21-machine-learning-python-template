@@ -96,6 +96,17 @@ El pipeline crea particiones estratificadas de entrenamiento, validación y prue
 
 EfficientNetB0 se entrena desde cero (`weights=None`). `ModelCheckpoint` guarda el mejor modelo en `models/efficientnet_b0_dogs_vs_cats.keras`; `EarlyStopping` y `ReduceLROnPlateau` ayudan a controlar el entrenamiento. En CPU, entrenar desde cero puede tardar bastante.
 
+### Resultados
+
+En la ejecución de Colab de 20 épocas, la última época obtuvo `accuracy=0.8864` y `val_accuracy=0.9052`. En el conjunto de prueba (2.500 imágenes balanceadas), se obtuvo `accuracy=0.8876` y `loss=0.2499`.
+
+| Clase | Precision | Recall | F1 | Imagenes |
+| --- | ---: | ---: | ---: | ---: |
+| Gato | 0.90 | 0.88 | 0.89 | 1.250 |
+| Perro | 0.88 | 0.90 | 0.89 | 1.250 |
+
+La diferencia moderada entre validacion y prueba y las metricas similares por clase sugieren un rendimiento equilibrado en datos no vistos.
+
 ## Añadiendo Modelos
 
 Para añadir clases de modelos SQLAlchemy, crea nuevos archivos de script de Python dentro del directorio models/. Estas clases deben ser definidas de acuerdo a tu esquema de base de datos.
