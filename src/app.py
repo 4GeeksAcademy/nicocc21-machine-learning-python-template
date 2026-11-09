@@ -1,4 +1,4 @@
-from utils import db_connect
-engine = db_connect()
-
-# your code here
+if __package__:
+	from .image_classifier import main
+else:
+	from image_classifier import main
