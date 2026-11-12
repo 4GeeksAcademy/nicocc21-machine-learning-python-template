@@ -74,11 +74,38 @@ DATABASE_URL="postgresql://mi_usuario:mi_contraseña@localhost:5432/mi_base_de_d
 
 ## Ejecutando la Aplicación
 
-Para ejecutar la aplicación, ejecuta el script app.py desde la raíz del directorio del proyecto:
+### Clasificador de perros y gatos
+
+El dataset debe estar descomprimido en `data/raw/dogs-vs-cats/train/`, con los archivos JPG nombrados con el prefijo `cat.` o `dog.`. El archivo ZIP y los datos originales permanecen excluidos de Git.
+
+Instala las dependencias desde la raíz del proyecto:
+
+```bash
+pip install -r requirements.txt
+```
+
+Ejecuta el flujo completo de preparación, entrenamiento y evaluación:
 
 ```bash
 python src/app.py
 ```
+
+También puedes seguir la exploración visual y los pasos del modelo en `src/explore.ipynb`.
+
+El pipeline crea particiones estratificadas de entrenamiento, validación y prueba (80/10/10) en `data/interim/image_classifier/`, que se ignora en Git. Las imágenes se leen por lotes de 16 y se ajustan a 200×200, como indica el paso de preprocesamiento de la guía; el modelo recibe las imágenes al mismo tamaño.
+
+EfficientNetB0 se entrena desde cero (`weights=None`). `ModelCheckpoint` guarda el mejor modelo en `models/efficientnet_b0_dogs_vs_cats.keras`; `EarlyStopping` y `ReduceLROnPlateau` ayudan a controlar el entrenamiento. En CPU, entrenar desde cero puede tardar bastante.
+
+### Resultados
+
+En la ejecución de Colab de 20 épocas, la última época obtuvo `accuracy=0.8864` y `val_accuracy=0.9052`. En el conjunto de prueba (2.500 imágenes balanceadas), se obtuvo `accuracy=0.8876` y `loss=0.2499`.
+
+| Clase | Precision | Recall | F1 | Imagenes |
+| --- | ---: | ---: | ---: | ---: |
+| Gato | 0.90 | 0.88 | 0.89 | 1.250 |
+| Perro | 0.88 | 0.90 | 0.89 | 1.250 |
+
+La diferencia moderada entre validacion y prueba y las metricas similares por clase sugieren un rendimiento equilibrado en datos no vistos.
 
 ## Añadiendo Modelos
 
