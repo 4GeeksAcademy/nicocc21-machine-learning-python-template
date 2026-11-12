@@ -1,18 +1,6 @@
 """Sistema de agrupación de casas (California Housing).
 
-Resultados observados (dataset completo, 20.640 filas, train 80% / test 20%):
-
-- Paso 2 (K-Means, 6 clusters): los clusters separan regiones geográficas. El norte
-  y el interior forman un grupo, el centro (Sierra Nevada y valle central) otro,
-  el sur (Los Ángeles) tiene grupos propios y la Bahía de San Francisco forma un
-  cluster compacto.
-- Paso 3 (predicción sobre test): los puntos de test se asignan a las mismas
-  regiones que los de train, lo que confirma que la predicción es coherente.
-- Paso 4 (RandomForest sobre los clusters): accuracy 0,995 y F1 macro 0,99 en test.
-  La clase con menos soporte (cluster 1, 89 muestras) tiene el recall más bajo
-  (0,97). Las métricas son muy altas por construcción: el clasificador aprende a
-  reproducir clusters generados con las mismas tres variables (latitud, longitud
-  e ingreso), así que no mide capacidad de generalización sobre otra variable.
+Descripción de resultados y advertencias: ver house_clustering.md en esta carpeta.
 """
 
 from pathlib import Path
