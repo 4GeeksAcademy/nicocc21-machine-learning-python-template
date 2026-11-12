@@ -3,3 +3,4 @@ __pycache__
 .learn
 data/raw/
 data/interim/image_classifier/
+models/*.pkl
